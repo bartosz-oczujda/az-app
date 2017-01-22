@@ -4,7 +4,7 @@ let mongoose = require('mongoose');
 let Medicine = require('./model/medicine');
 let path = require('path');
 
-mongoose.connect('mongodb://localhost/azfc_db'); // connect to our database
+mongoose.connect('mongodb://localhost/azfc_db'); 
 
 let app = express();
 
@@ -24,23 +24,6 @@ router.route('/')
         res.render('index', {
             title: `AZFC`
         })
-    });
-
-router.route('/medicine')
-
-    .get((req, res) => {
-
-        Medicine.find((err, result) => {
-            if (err) {
-                res.send(err);
-            }
-
-            res.render('medicine', {
-                medicines: result
-            })
-
-        })
-
     });
 
 router_api.route("/medicine")
@@ -80,23 +63,19 @@ router_api.route("/medicine")
 
     });
 
-/*router_api.route("/medicine/:med_id")
+//TODO: super unsafe temporary solution - change this
+var allowCrossDomain = function(req, res, next) {
+    //if ('OPTIONS' == req.method) {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+      next();
+    //}
+};
 
- .get((req, res) => {
- connection.query(query, [req.params.med_id], function (err, rows, fields) {
- if (!err) {
- console.log('The solution is: ', rows);
- res.json(rows);
- }
- else {
- console.log('Error while performing Query.');
- }
- });
-
- //connection.end();
- });*/
-
+app.use(allowCrossDomain);
+ 
 app.use("/api", router_api);
 app.use("/", router);
-
+console.log("Started");
 app.listen(port);
