@@ -1,16 +1,37 @@
 import React from 'react';
-import { render } from 'react-dom'
-import AwesomeComponent from './AwesomeComponent.jsx'
+import { render } from 'react-dom';
+import configureStore from './store/configureStore';
+import { Provider } from 'react-redux';
+import AwesomeComponent from './AwesomeComponent.jsx';
+import { connect } from 'react-redux';
+
+const initialState = {
+    medicines: [
+    
+    ]};
+
+const store = configureStore(initialState);
 
 class App extends React.Component {
+    
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <div>
                 <p>Hello React!</p> 
-                <AwesomeComponent />
+                <AwesomeComponent/>
             </div>
         );
     }
 }
 
-render(<App/>, document.getElementById('app'));
+function mapStateToProps(state) {
+    return state;
+}
+
+export default connect(mapStateToProps)(App);
+
+render(<Provider store={store}><App/></Provider>, document.getElementById('app'));

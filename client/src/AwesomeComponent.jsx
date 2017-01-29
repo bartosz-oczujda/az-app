@@ -1,26 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { fetchMedicineList } from './actions/index'
 
 class AwesomeComponent extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = { data: 0 };
+        console.log(props);
         this.onPress = this.onPress.bind(this);
     }
 
     onPress() {
-        fetch('http://localhost:8080/api/medicine/').then(response => {
-            response.json().then( json => {
-                this.setState({ data: json });
-            })  
-
-        });
+        this.props.dispatch(fetchMedicineList());
     }
 
     render() {
-        console.log(this.state.data);
 
-        let inputData = this.state.data ? this.state.data.map( med => <p>{`${med.eng_name} ${med.type}`}</p> ) : "";
+        let inputData = this.props.medicines;
         
         return (
             <div>
@@ -28,7 +24,12 @@ class AwesomeComponent extends React.Component {
                 <div><button onClick={this.onPress}>get</button></div>
             </div>
         );
-    }
+    };
+
 }
 
-export default AwesomeComponent;
+function mapStateToProps(state) {
+    return state;
+}
+
+export default connect(mapStateToProps)(AwesomeComponent);
