@@ -13,12 +13,14 @@ const config = {
     module: {
         loaders: [
             {
-                test: /\.jsx?/,
+                test: /\.jsx?$/,
                 include: source_directory,
                 loader: 'babel'
             }
         ]
-    }
+    },
+    devtool: 'source-map',
+    debug: true
 };
 
 module.exports = config;
