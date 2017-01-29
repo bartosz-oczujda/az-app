@@ -6,12 +6,12 @@ import reducer from '../reducers/reducers'
 const loggerMiddleware = createLogger();
 
 export default function configureStore(initialState) {
-    return createStore(
-        reducer,
-        initialState,
-        applyMiddleware(
-            thunkMiddleware,
-            loggerMiddleware
-        )
-    );
+	return createStore(
+		reducer,
+		initialState,
+		applyMiddleware(
+			thunkMiddleware,
+			loggerMiddleware
+		)
+	);
 }

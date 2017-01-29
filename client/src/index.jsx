@@ -6,30 +6,30 @@ import AwesomeComponent from './AwesomeComponent.jsx';
 import { connect } from 'react-redux';
 
 const initialState = {
-    medicines: [
-    
-    ]};
+	medicines: [
+
+	]};
 
 const store = configureStore(initialState);
 
 class App extends React.Component {
-    
-    constructor(props) {
-        super(props);
-    }
 
-    render() {
-        return (
-            <div>
-                <p>Hello React!</p> 
-                <AwesomeComponent/>
-            </div>
-        );
-    }
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return (
+			<div>
+				<p>Hello React!</p> 
+				<AwesomeComponent/>
+			</div>
+		);
+	}
 }
 
 function mapStateToProps(state) {
-    return state;
+	return state;
 }
 
 export default connect(mapStateToProps)(App);
