@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchMedicineList } from './actions/index'
 
-class AwesomeComponent extends React.Component {
+class ButtonComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -20,7 +20,7 @@ class AwesomeComponent extends React.Component {
 
 		return (
 			<div>
-				Data: {inputData} 
+				Data: {inputData.map(medicine => <p>{medicine}</p>)} 
 				<div><button onClick={this.onPress}>get</button></div>
 			</div>
 		);
@@ -32,4 +32,4 @@ function mapStateToProps(state) {
 	return state;
 }
 
-export default connect(mapStateToProps)(AwesomeComponent);
+export default connect(mapStateToProps)(ButtonComponent);

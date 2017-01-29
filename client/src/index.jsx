@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
-import AwesomeComponent from './AwesomeComponent.jsx';
+import ButtonComponent from './ButtonComponent.jsx';
 import { connect } from 'react-redux';
 
 const initialState = {
@@ -22,7 +22,7 @@ class App extends React.Component {
 		return (
 			<div>
 				<p>Hello React!</p> 
-				<AwesomeComponent/>
+				<ButtonComponent/>
 			</div>
 		);
 	}
