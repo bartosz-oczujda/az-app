@@ -20,11 +20,15 @@ class ButtonComponent extends React.Component {
 
 		return (
 			<div>
-				Data: {inputData.map(medicine => <p>{medicine}</p>)} 
+				Data: {inputData.map((medicine, i) => <p key={i} onClick={this.onNameClick}>{medicine}</p>)} 
 				<div><button onClick={this.onPress}>get</button></div>
 			</div>
 		);
 	};
+
+	onNameClick(event) {
+		alert(event.target.innerHTML);
+	}
 
 }
 
