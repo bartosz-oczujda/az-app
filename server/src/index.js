@@ -4,12 +4,7 @@ let mongoose = require('mongoose');
 let Medicine = require('./model/medicine');
 let path = require('path');
 
-mongoose.connect('mongodb://localhost/azfc_db'); 
-
 let app = express();
-
-app.set('views', path.join(__dirname, 'view'));
-app.set('view engine', 'pug');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -17,6 +12,17 @@ app.use(bodyParser.json());
 let port = process.env.PORT || 8080;
 let router_api = express.Router();
 let router = express.Router();
+
+
+mongoose.promise = global.Promise;
+let options = { promiseLibrary: global.Promise };
+
+if(process.env.NODE_ENV == 'test') {
+	mongoose.connect('mongodb://localhost/azfc_db_dev', options); 
+}
+else {
+	mongoose.connect('mongodb://localhost/azfc_db', options); 
+}
 
 router.route('/')
 
@@ -77,5 +83,7 @@ app.use(allowCrossDomain);
 
 app.use("/api", router_api);
 app.use("/", router);
-console.log("Started");
+console.log(process.env.NODE_ENV);
 app.listen(port);
+
+module.exports = app;
