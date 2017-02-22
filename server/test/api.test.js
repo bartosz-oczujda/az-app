@@ -39,5 +39,23 @@ describe('Reset the database', () => {
 					done();
 				});
 		});
+
+		it('it should get a shortened list of medicines', (done) => {
+			chai.request(server)
+				.get('/api/medicine/short')
+				.end((err, res) => {
+					expect(res.status).to.equal(200);
+					expect(res.body).to.have.deep.property('[0].eng_name');
+					expect(res.body).to.have.deep.property('[0].lat_name');
+					expect(res.body).to.have.deep.property('[0].pol_name');
+					expect(res.body).to.have.deep.property('[0].ger_name');
+					expect(res.body).to.have.deep.property('[0].type');
+					expect(res.body).to.have.deep.property('[0]._id');
+					expect(res.body).to.not.have.deep.property('[0].organisms');
+					expect(res.body).to.not.have.deep.property('[0].ailments');
+					expect(res.body).to.not.have.deep.property('[0].active_ingredients');
+					done();
+				});
+		});
 	});
 });

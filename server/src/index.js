@@ -1,5 +1,5 @@
-let express = require("express");
-let bodyParser = require("body-parser");
+let express = require('express');
+let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let Medicine = require('./model/medicine');
 let path = require('path');
@@ -32,7 +32,7 @@ router.route('/')
 		})
 	});
 
-router_api.route("/medicine")
+router_api.route('/medicine')
 
 	.get((req, res) => {
 
@@ -69,6 +69,19 @@ router_api.route("/medicine")
 
 	});
 
+router_api.route('/medicine/short')
+	.get((req, res) => {
+		
+		let query = Medicine.find().select({eng_name: 1, lat_name: 1, pol_name: 1, ger_name: 1, type: 1});
+		query.exec((err, result) => {
+			if (err) {
+				res.send(err);
+			}
+
+			res.json(result);
+		});
+	});
+
 //TODO: super unsafe temporary solution - change this
 var allowCrossDomain = function(req, res, next) {
 	//if ('OPTIONS' == req.method) {
@@ -81,8 +94,8 @@ var allowCrossDomain = function(req, res, next) {
 
 app.use(allowCrossDomain);
 
-app.use("/api", router_api);
-app.use("/", router);
+app.use('/api', router_api);
+app.use('/', router);
 console.log(process.env.NODE_ENV);
 app.listen(port);
 
