@@ -9,10 +9,10 @@ chai.use(chaiHttp);
 
 function fillDBwithMockData() {
 	let medicine = new Medicine();
-	medicine.eng_name = 'Neroli';
-	medicine.lat_name = 'Citrus Aurantium';
-	medicine.pol_name = '';
-	medicine.ger_name = '';
+	medicine.english_name = 'Neroli';
+	medicine.latin_name = 'Citrus Aurantium';
+	medicine.polish_name = '';
+	medicine.german_name = '';
 	medicine.type = 'Essential Oil';
 	medicine.organisms = ['Canine', 'Feline'];
 	medicine.ailments = ['Psoriasis'];
@@ -45,10 +45,10 @@ describe('Reset the database', () => {
 				.get('/api/medicine/short')
 				.end((err, res) => {
 					expect(res.status).to.equal(200);
-					expect(res.body).to.have.deep.property('[0].eng_name');
-					expect(res.body).to.have.deep.property('[0].lat_name');
-					expect(res.body).to.have.deep.property('[0].pol_name');
-					expect(res.body).to.have.deep.property('[0].ger_name');
+					expect(res.body).to.have.deep.property('[0].english_name');
+					expect(res.body).to.have.deep.property('[0].latin_name');
+					expect(res.body).to.have.deep.property('[0].polish_name');
+					expect(res.body).to.have.deep.property('[0].german_name');
 					expect(res.body).to.have.deep.property('[0].type');
 					expect(res.body).to.have.deep.property('[0]._id');
 					expect(res.body).to.not.have.deep.property('[0].organisms');

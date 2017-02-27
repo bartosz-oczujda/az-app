@@ -3,7 +3,6 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let Medicine = require('./model/medicine');
 let path = require('path');
-
 let app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -50,14 +49,14 @@ router_api.route('/medicine')
 	.post((req, res) => {
 
 		let medicine = new Medicine();
-		medicine.eng_name = req.body.eng_name;
-		medicine.lat_name = req.body.lat_name;
-		medicine.pol_name = req.body.pol_name;
-		medicine.ger_name = req.body.ger_name;
+		medicine.english_name = req.body.english_name;
+		medicine.latin_name = req.body.latin_name;
+		medicine.polish_name = req.body.polish_name;
+		medicine.german_name = req.body.german_name;
 		medicine.type = req.body.type;
-		medicine.organisms = req.body.organisms.split(',');
+		/*medicine.organisms = req.body.organisms.split(',');
 		medicine.ailments = req.body.ailments;
-		medicine.active_ingredients = req.body.active_ingredients;
+		medicine.active_ingredients = req.body.active_ingredients;*/
 
 		medicine.save(err => {
 			if (err) {
@@ -72,7 +71,7 @@ router_api.route('/medicine')
 router_api.route('/medicine/short')
 	.get((req, res) => {
 		
-		let query = Medicine.find().select({eng_name: 1, lat_name: 1, pol_name: 1, ger_name: 1, type: 1});
+		let query = Medicine.find().select({english_name: 1, latin_name: 1, polish_name: 1, german_name: 1, type: 1});
 		query.exec((err, result) => {
 			if (err) {
 				res.send(err);
@@ -81,6 +80,19 @@ router_api.route('/medicine/short')
 			res.json(result);
 		});
 	});
+
+router_api.route('/medicine/detail/:id')
+    .get((req, res) => {
+		let id = req.params.id;
+        let query = Medicine.findById(id);
+        query.exec((err, result) => {
+            if (err) {
+                res.send(err);
+            }
+
+            res.json(result);
+        });
+    });
 
 //TODO: super unsafe temporary solution - change this
 var allowCrossDomain = function(req, res, next) {
