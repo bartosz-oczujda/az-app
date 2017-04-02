@@ -8,7 +8,7 @@ let app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-let port = process.env.PORT || 8080;
+let port = process.env.SERVERPORT || 8080;
 let router_api = express.Router();
 let router = express.Router();
 
@@ -109,6 +109,9 @@ app.use(allowCrossDomain);
 app.use('/api', router_api);
 app.use('/', router);
 console.log(process.env.NODE_ENV);
+console.log(process.env.PORT);
+console.log(process.env.SERVERPORT);
+console.log(port);
 app.listen(port);
 
 module.exports = app;
