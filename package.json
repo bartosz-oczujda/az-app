@@ -6,15 +6,15 @@
 	"author": "Pixelrockit <bartosz.oczujda@gmail.com>",
 	"license": "MIT",
 	"scripts": {
-		"start:server": "SET NODE_ENV=development && nodemon ./server/src/index.js",
+		"start:server": "export NODE_ENV=development && nodemon ./server/src/index.js",
 		"start:client": "webpack-dev-server --port 3000 --content-base ./client/dist/",
 		"build:client": "webpack -d",
-		"test:api": "SET NODE_ENV=test && mocha ./server/test/*.test.js --timeout 10000"
+		"test:api": "export NODE_ENV=test && mocha ./server/test/*.test.js --timeout 10000"
 	},
 	"dependencies": {
 		"body-parser": "^1.15.2",
 		"express": "^4.14.0",
-		"mongoose": "^4.7.7",
+		"mongoose": "^4.9.2",
 		"react": "^15.4.2",
 		"react-dom": "^15.4.2",
 		"react-redux": "^5.0.2",

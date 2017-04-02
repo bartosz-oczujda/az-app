@@ -5,22 +5,35 @@ let Medicine = require('./model/medicine');
 let path = require('path');
 let app = express();
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 let port = process.env.SERVERPORT || 8080;
 let router_api = express.Router();
 let router = express.Router();
 
+/*process.on('SIGINT', function () {
+	mongoose.connection.close(function () {
+		console.log('Mongoose disconnected due to api server termination');
+		process.exit(0);
+	});
+});
+
+process.on('exit', function () {
+	mongoose.connection.close(function () {
+		console.log('Mongoose disconnected due to api server termination');
+		process.exit(0);
+	});
+});*/
 
 mongoose.promise = global.Promise;
 let options = { promiseLibrary: global.Promise };
 
-if(process.env.NODE_ENV == 'test') {
-	mongoose.connect('mongodb://localhost/azfc_db_dev', options); 
+if (process.env.NODE_ENV == 'test') {
+	mongoose.connect('mongodb://localhost/azfc_db_dev', options);
 }
 else {
-	mongoose.connect('mongodb://localhost/azfc_db', options); 
+	mongoose.connect('mongodb://localhost/azfc_db', options);
 }
 
 router.route('/')
@@ -63,15 +76,15 @@ router_api.route('/medicine')
 				res.send(err);
 			}
 
-			res.json({message: 'medicine created'});
+			res.json({ message: 'medicine created' });
 		})
 
 	});
 
 router_api.route('/medicine/short')
 	.get((req, res) => {
-		
-		let query = Medicine.find().select({english_name: 1, latin_name: 1, polish_name: 1, german_name: 1, type: 1});
+
+		let query = Medicine.find().select({ english_name: 1, latin_name: 1, polish_name: 1, german_name: 1, type: 1 });
 		query.exec((err, result) => {
 			if (err) {
 				res.send(err);
@@ -82,20 +95,20 @@ router_api.route('/medicine/short')
 	});
 
 router_api.route('/medicine/detail/:id')
-    .get((req, res) => {
+	.get((req, res) => {
 		let id = req.params.id;
-        let query = Medicine.findById(id);
-        query.exec((err, result) => {
-            if (err) {
-                res.send(err);
-            }
+		let query = Medicine.findById(id);
+		query.exec((err, result) => {
+			if (err) {
+				res.send(err);
+			}
 
-            res.json(result);
-        });
-    });
+			res.json(result);
+		});
+	});
 
 //TODO: super unsafe temporary solution - change this
-var allowCrossDomain = function(req, res, next) {
+var allowCrossDomain = function (req, res, next) {
 	//if ('OPTIONS' == req.method) {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
@@ -112,6 +125,17 @@ console.log(process.env.NODE_ENV);
 console.log(process.env.PORT);
 console.log(process.env.SERVERPORT);
 console.log(port);
-app.listen(port);
 
-module.exports = app;
+
+
+
+
+let server = app.listen(port);
+module.exports = {server, terminate: () => {
+	server.close(() => {
+		mongoose.connection.close(function () {
+		console.log('Mongoose disconnected due to api server termination');
+		//process.exit(0);
+	});
+	})
+}};
