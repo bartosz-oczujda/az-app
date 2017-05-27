@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const output_directory = path.resolve(__dirname, 'client/dist');
 const source_directory = path.resolve(__dirname, 'client/src');
@@ -19,6 +20,9 @@ const config = {
 			}
 		]
 	},
+	plugins: [
+        new HtmlWebpackPlugin({template: 'client/index.html'})
+    ],
 	devtool: 'source-map',
 	debug: true
 };
