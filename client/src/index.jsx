@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
-import ButtonComponent from './ButtonComponent.jsx';
+import MedicineListComponent from './MedicineListComponent.jsx';
 import { connect } from 'react-redux';
 
 const initialState = {
@@ -21,8 +21,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<p>Hello React!</p> 
-				<ButtonComponent/>
+				<MedicineListComponent/>
 			</div>
 		);
 	}
