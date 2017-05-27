@@ -1,6 +1,8 @@
 let express = require('express');
 let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
+mongoose.promise = global.Promise;
+
 let Medicine = require('./model/medicine');
 let path = require('path');
 let app = express();
@@ -26,7 +28,6 @@ process.on('exit', function () {
 	});
 });*/
 
-mongoose.promise = global.Promise;
 let options = { promiseLibrary: global.Promise };
 
 if (process.env.NODE_ENV == 'test') {
@@ -122,8 +123,6 @@ app.use(allowCrossDomain);
 app.use('/api', router_api);
 app.use('/', router);
 console.log(process.env.NODE_ENV);
-console.log(process.env.PORT);
-console.log(process.env.SERVERPORT);
 console.log(port);
 
 
