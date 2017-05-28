@@ -24,3 +24,34 @@ export function fetchMedicineList() {
 
 	}
 }
+
+
+
+
+
+export const GET_MEDICINE_DETAILS = 'GET_MEDICINE_DETAILS';
+function getMedicineDetails() {
+	return {
+		type: 'GET_MEDICINE_DETAILS'
+	}
+}
+
+export const RECEIVE_MEDICINE_DETAILS = 'RECEIVE_MEDICINE_DETAILS';
+function receiveMedicineDetails(json) {
+	return {
+		type: 'RECEIVE_MEDICINE_DETAILS',
+		data: json
+	}
+}
+
+export function fetchMedicineDetails(id) {
+	return function(dispatch) {
+		dispatch(getMedicineDetails());
+		fetch(`http://localhost:8080/api/medicine/detail/${id}`)
+			.then(response => response.json()
+				.then( json => dispatch(receiveMedicineDetails(json)))  
+
+			);
+
+	}
+}
