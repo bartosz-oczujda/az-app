@@ -16,7 +16,7 @@ class MedicineListComponent extends React.Component {
 
 		return (
 			<div style={{float:"left", width:"300px"}}>
-				{inputData.map((medicine, i) => <p key={i} onClick={this.onNameClick}>{medicine}</p>)} 
+				{inputData.map((medicine, i) => <p key={i} onClick={this.onNameClick}>{medicine.english_name}</p>)} 
 			</div>
 		);
 	};

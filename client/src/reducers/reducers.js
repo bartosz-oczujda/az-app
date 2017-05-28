@@ -4,7 +4,7 @@ let reducer = (state, action) => {
 	switch (action.type) {
 		case RECEIVE_MEDICINE_LIST:
 			return Object.assign({}, state, {
-				medicineList: action.data.map( medicine => medicine.english_name )
+				medicineList: action.data.map( medicine => { return { english_name: medicine.english_name, id: medicine._id } } )
 			});
 			break;
 		default:
