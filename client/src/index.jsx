@@ -3,12 +3,13 @@ import { render } from 'react-dom';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
 import MedicineListComponent from './MedicineListComponent.jsx';
+import DetailsViewComponent from "./DetailsViewComponent.jsx"
 import { connect } from 'react-redux';
 
 const initialState = {
-	medicines: [
-
-	]};
+	medicineList: [],
+	selectedMedicineDetails: ""
+};
 
 const store = configureStore(initialState);
 
@@ -22,6 +23,7 @@ class App extends React.Component {
 		return (
 			<div>
 				<MedicineListComponent/>
+				<DetailsViewComponent/>
 			</div>
 		);
 	}

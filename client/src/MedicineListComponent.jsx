@@ -12,10 +12,10 @@ class MedicineListComponent extends React.Component {
 
 	render() {
 
-		let inputData = this.props.medicines;
+		let inputData = this.props.medicineList;
 
 		return (
-			<div>
+			<div style={{float:"left", width:"300px"}}>
 				{inputData.map((medicine, i) => <p key={i} onClick={this.onNameClick}>{medicine}</p>)} 
 			</div>
 		);
