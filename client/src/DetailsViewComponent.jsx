@@ -12,7 +12,7 @@ class DetailsViewComponent extends React.Component {
 
 		return (
 			<div style={{float:"left"}}>
-                <p>These are details</p>
+                <p>{this.props.selectedMedicineDetails}</p>
 			</div>
 		);
 	};

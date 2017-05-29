@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchMedicineList } from './actions/index'
+import MedicineListItemComponent from "./MedicineListItemComponent.jsx"
 
 class MedicineListComponent extends React.Component {
 
@@ -16,7 +17,7 @@ class MedicineListComponent extends React.Component {
 
 		return (
 			<div style={{float:"left", width:"300px"}}>
-				{inputData.map((medicine, i) => <p key={i} onClick={this.onNameClick}>{medicine.english_name}</p>)} 
+				{inputData.map((medicine, i) => <MedicineListItemComponent key={i} id={medicine.id} name={medicine.english_name}/>)} 
 			</div>
 		);
 	};
