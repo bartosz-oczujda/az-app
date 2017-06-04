@@ -16,7 +16,7 @@ class MedicineListComponent extends React.Component {
 		let inputData = this.props.medicineList;
 
 		return (
-			<div style={{float:"left", width:"300px"}}>
+			<div style={{float:"left", height:"500px", "overflowY":"scroll"}}>
 				{inputData.map((medicine, i) => <MedicineListItemComponent key={i} id={medicine.id} name={medicine.english_name}/>)} 
 			</div>
 		);
