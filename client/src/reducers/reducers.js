@@ -10,7 +10,7 @@ let reducer = (state, action) => {
 			break;
 		case RECEIVE_MEDICINE_DETAILS:
 			return Object.assign({}, state, {
-				selectedMedicineDetails: action.data.description
+				selectedMedicineDetails: action.data
 			});
 			break;
 		default:
