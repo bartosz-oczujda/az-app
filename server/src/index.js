@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 
 let port = process.env.SERVERPORT || 8080;
 let router_api = express.Router();
-let router = express.Router();
 
 /*process.on('SIGINT', function () {
 	mongoose.connection.close(function () {
@@ -36,14 +35,6 @@ if (process.env.NODE_ENV == 'test') {
 else {
 	mongoose.connect('mongodb://localhost/azfc_db', options);
 }
-
-router.route('/')
-
-	.get((req, res) => {
-		res.render('index', {
-			title: `AZFC`
-		})
-	});
 
 router_api.route('/medicine')
 
@@ -121,7 +112,6 @@ var allowCrossDomain = function (req, res, next) {
 app.use(allowCrossDomain);
 
 app.use('/api', router_api);
-app.use('/', router);
 console.log(process.env.NODE_ENV);
 console.log(port);
 
