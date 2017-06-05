@@ -10,7 +10,7 @@ class MedicineListItemComponent extends React.Component {
 
 	render() {
 		return (
-                <li onClick={this.onNameClick.bind(this)}>{this.props.name}</li>
+                <li className="medicineItem" onClick={this.onNameClick.bind(this)}>{this.props.name}</li>
 		);
 	};
 

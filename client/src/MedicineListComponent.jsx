@@ -16,7 +16,7 @@ class MedicineListComponent extends React.Component {
 		let inputData = this.props.medicineList;
 
 		return (
-			<div>
+			<div className="medicineListComponent">
 				{inputData.map((medicine, i) => <MedicineListItemComponent key={i} id={medicine.id} name={medicine.english_name}/>)} 
 			</div>
 		);

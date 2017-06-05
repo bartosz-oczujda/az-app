@@ -11,7 +11,7 @@ class DetailsViewComponent extends React.Component {
 
 
 		return (
-			<div>
+			<div className="detailsViewComponent">
 				<strong>Names:</strong>
 				<div>
 					<span>{this.props.selectedMedicineDetails.english_name}</span>
