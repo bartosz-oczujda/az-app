@@ -1,16 +1,17 @@
+const path = require('path');
+require('dotenv').config();
+
 let express = require('express');
 let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 mongoose.promise = global.Promise;
 
 let Medicine = require('./model/medicine');
-let path = require('path');
 let app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-let port = process.env.SERVERPORT || 8080;
 let router_api = express.Router();
 
 /*process.on('SIGINT', function () {
@@ -29,12 +30,7 @@ process.on('exit', function () {
 
 let options = { promiseLibrary: global.Promise };
 
-if (process.env.NODE_ENV == 'test') {
-	mongoose.connect('mongodb://localhost/azfc_db_dev', options);
-}
-else {
-	mongoose.connect('mongodb://localhost/azfc_db', options);
-}
+mongoose.connect(process.env.DB_URI, options);
 
 router_api.route('/medicine')
 
@@ -112,14 +108,10 @@ var allowCrossDomain = function (req, res, next) {
 app.use(allowCrossDomain);
 
 app.use('/api', router_api);
-console.log(process.env.NODE_ENV);
-console.log(port);
 
 
 
-
-
-let server = app.listen(port);
+let server = app.listen(process.env.SERVER_PORT);
 module.exports = {server, terminate: () => {
 	server.close(() => {
 		mongoose.connection.close(function () {
