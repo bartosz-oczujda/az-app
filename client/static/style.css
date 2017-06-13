@@ -5,8 +5,15 @@
 
 .medicineItem {
     list-style: none;
+    padding-bottom: 0.5em;
 }
+
+.medicineListComponent :hover {
+    background: green;
+}
+
 .medicineListComponent {
+    width: 30%;
     height: 100vh;
     float: left;
     overflow: hidden;
