@@ -1,81 +1,122 @@
-let express = require("express");
-let bodyParser = require("body-parser");
+const path = require('path');
+require('dotenv').config();
+
+let express = require('express');
+let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
+mongoose.promise = global.Promise;
+
 let Medicine = require('./model/medicine');
-let path = require('path');
-
-mongoose.connect('mongodb://localhost/azfc_db'); 
-
 let app = express();
 
-app.set('views', path.join(__dirname, 'view'));
-app.set('view engine', 'pug');
-
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-let port = process.env.PORT || 8080;
 let router_api = express.Router();
-let router = express.Router();
 
-router.route('/')
+/*process.on('SIGINT', function () {
+	mongoose.connection.close(function () {
+		console.log('Mongoose disconnected due to api server termination');
+		process.exit(0);
+	});
+});
 
-    .get((req, res) => {
-        res.render('index', {
-            title: `AZFC`
-        })
-    });
+process.on('exit', function () {
+	mongoose.connection.close(function () {
+		console.log('Mongoose disconnected due to api server termination');
+		process.exit(0);
+	});
+});*/
 
-router_api.route("/medicine")
+let options = { promiseLibrary: global.Promise };
 
-    .get((req, res) => {
+mongoose.connect(process.env.DB_URI, options);
 
-        Medicine.find((err, result) => {
-            if (err) {
-                res.send(err);
-            }
+router_api.route('/medicine')
 
-            res.json(result);
+	.get((req, res) => {
 
-        })
+		Medicine.find((err, result) => {
+			if (err) {
+				res.send(err);
+			}
 
-    })
+			res.json(result);
 
-    .post((req, res) => {
+		})
 
-        let medicine = new Medicine();
-        medicine.eng_name = req.body.eng_name;
-        medicine.lat_name = req.body.lat_name;
-        medicine.pol_name = req.body.pol_name;
-        medicine.ger_name = req.body.ger_name;
-        medicine.type = req.body.type;
-        medicine.organisms = req.body.organisms.split(',');
-        medicine.ailments = req.body.ailments;
-        medicine.active_ingredients = req.body.active_ingredients;
+	})
 
-        medicine.save(err => {
-            if (err) {
-                res.send(err);
-            }
+	.post((req, res) => {
 
-            res.json({message: 'medicine created'});
-        })
+		let medicine = new Medicine();
+		medicine.english_name = req.body.english_name;
+		medicine.latin_name = req.body.latin_name;
+		medicine.polish_name = req.body.polish_name;
+		medicine.german_name = req.body.german_name;
+		medicine.type = req.body.type;
+		/*medicine.organisms = req.body.organisms.split(',');
+		medicine.ailments = req.body.ailments;
+		medicine.active_ingredients = req.body.active_ingredients;*/
 
-    });
+		medicine.save(err => {
+			if (err) {
+				res.send(err);
+			}
+
+			res.json({ message: 'medicine created' });
+		})
+
+	});
+
+router_api.route('/medicine/short')
+	.get((req, res) => {
+
+		let query = Medicine.find().select({ english_name: 1, latin_name: 1, polish_name: 1, german_name: 1, type: 1 });
+		query.exec((err, result) => {
+			if (err) {
+				res.send(err);
+			}
+
+			res.json(result);
+		});
+	});
+
+router_api.route('/medicine/detail/:id')
+	.get((req, res) => {
+		let id = req.params.id;
+		let query = Medicine.findById(id);
+		query.exec((err, result) => {
+			if (err) {
+				res.send(err);
+			}
+
+			res.json(result);
+		});
+	});
 
 //TODO: super unsafe temporary solution - change this
-var allowCrossDomain = function(req, res, next) {
-    //if ('OPTIONS' == req.method) {
-      res.header('Access-Control-Allow-Origin', '*');
-      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-      next();
-    //}
+var allowCrossDomain = function (req, res, next) {
+	//if ('OPTIONS' == req.method) {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+	next();
+	//}
 };
 
 app.use(allowCrossDomain);
- 
-app.use("/api", router_api);
-app.use("/", router);
-console.log("Started");
-app.listen(port);
+
+app.use('/api', router_api);
+
+
+
+let server = app.listen(process.env.SERVER_PORT);
+module.exports = {server, terminate: () => {
+	server.close(() => {
+		mongoose.connection.close(function () {
+		console.log('Mongoose disconnected due to api server termination');
+		//process.exit(0);
+	});
+	})
+}};
