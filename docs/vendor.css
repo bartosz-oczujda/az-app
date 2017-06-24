@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.medicineItem {
+    list-style: none;
+    padding-bottom: 0.5em;
+}
+
+.medicineListComponent :hover {
+    background: green;
+}
+
+.medicineListComponent {
+    width: 30%;
+    height: 100vh;
+    float: left;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.detailsViewComponent {
+    float: left;
+    padding-left: 2%;
+    width: 50%;
+}
+
+.detailsViewComponent span {
+    padding-right: 1em;
+}
+/*# sourceMappingURL=vendor.css.map*/

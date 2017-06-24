@@ -3,7 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const output_directory = path.resolve(__dirname, 'client/dist');
+const output_directory = path.resolve(__dirname, 'docs');
 const source_directory = path.resolve(__dirname, 'client/src');
 
 const config = {
