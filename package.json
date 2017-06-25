@@ -6,9 +6,10 @@
 	"author": "Pixelrockit <bartosz.oczujda@gmail.com>",
 	"license": "MIT",
 	"scripts": {
-		"start:server": "export NODE_ENV=development && nodemon ./server/src/index.js",
+		"start:server": "nodemon ./server/src/index.js",
 		"start:client": "webpack-dev-server --port 3000 --content-base ./client/dist/",
-		"build:client": "webpack",
+		"build:client": "webpack --env.dev=true --config webpack.dev.config.js",
+		"build:client:production": "webpack --env.dev=false --config webpack.dev.config.js",
 		"test:api": "export NODE_ENV=test && mocha ./server/test/*.test.js --timeout 10000"
 	},
 	"dependencies": {
@@ -39,6 +40,7 @@
 		"nodemon": "^1.11.0",
 		"style-loader": "^0.18.2",
 		"webpack": "^2.6.1",
-		"webpack-dev-server": "^2.4.5"
+		"webpack-dev-server": "^2.4.5",
+		"webpack-merge": "^4.1.0"
 	}
 }

@@ -16,7 +16,7 @@ function receiveMedicineList(json) {
 export function fetchMedicineList() {
 	return function(dispatch) {
 		dispatch(getMedicineList());
-		fetch('http://localhost:8080/api/medicine/')
+		fetch(`${API_URL}/api/medicine/`)
 			.then(response => response.json()
 				.then( json => dispatch(receiveMedicineList(json)))  
 
