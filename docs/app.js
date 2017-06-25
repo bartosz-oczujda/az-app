@@ -4678,7 +4678,7 @@ function receiveMedicineList(json) {
 function fetchMedicineList() {
 	return function (dispatch) {
 		dispatch(getMedicineList());
-		fetch('http://localhost:8080/api/medicine/').then(function (response) {
+		fetch("ec2-52-57-207-38.eu-central-1.compute.amazonaws.com:3000" + '/api/medicine/').then(function (response) {
 			return response.json().then(function (json) {
 				return dispatch(receiveMedicineList(json));
 			});
