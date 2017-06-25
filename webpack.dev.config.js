@@ -45,7 +45,7 @@ const config = function(env){
 };
 
 const getApiUrl = (isDevEnv) => {
-	const url = isDevEnv ? 'http://localhost:8080' : 'http://ec2-52-57-207-38.eu-central-1.compute.amazonaws.com:3000'
+	const url = isDevEnv ? 'http://localhost:3000' : 'http://ec2-52-57-207-38.eu-central-1.compute.amazonaws.com:3000'
 	return JSON.stringify(url)
 }
 
